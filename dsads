@@ -1,0 +1,40 @@
+from PIL import Image
+import numpy as np
+
+img = Image.open('inicjaly.bmp')
+def rysuj_paski_w_obrazie(obraz, grub):
+    tab_obraz = np.asarray(img,dtype=np.uint8)
+    h, w = tab_obraz.shape
+    for i in range(h):
+        for j in range(grub):
+            tab_obraz[i][j] = 0
+        for j in range(w-grub,w):
+            tab_obraz[i][j] = 0
+    tab_obraz = tab_obraz.astype(dtype=bool)
+    return Image.fromarray(tab_obraz)
+
+
+def rysuj_ramke_w_obrazie(obraz,grub):
+    tab_obraz = np.asarray(obraz,dtype=np.uint8)
+    h, w = tab_obraz.shape
+    for i in range(h):
+        for j in range(w):
+            if i < grub or (i>=h - grub and i < h):
+                tab_obraz[i][j] = 0
+    for i in range(h):
+        for j in range(w-grub,w):
+            tab_obraz[i][j] = 0
+        for j in range(grub):
+            tab_obraz[i][j] = 0
+
+    tab_obraz = tab_obraz.astype(dtype=bool)
+    return Image.fromarray(tab_obraz)
+
+
+img = rysuj_ramke_w_obrazie(img,10)
+img.show()
+
+
+
+
+
